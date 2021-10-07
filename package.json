@@ -1,0 +1,17 @@
+{
+  "name": "beefy-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "process": "truffle console --network moonriver --verbose-rpc",
+    "migrate": "truffle migration --network moonriver",
+    "flatten": "./node_modules/truffle-flattener/index.js"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "4.3.2",
+    "@truffle/hdwallet-provider": "^1.5.0"
+  },
+  "devDependencies": {
+    "truffle-flattener": "https://github.com/jplew/truffle-flattener"
+  }
+}
