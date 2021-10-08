@@ -35,6 +35,8 @@ contract StrategyCommonChefLP is StratManager {
     address[] public toLp1Route;
     bool immutable public isNativeRoutes;
 
+    uint256 public lastHarvest;
+
     /**
      * @dev Event that is fired each time someone harvests the strat.
      */
@@ -111,18 +113,22 @@ contract StrategyCommonChefLP is StratManager {
     function harvest() public virtual whenNotPaused onlyEOA {
         IMasterChef(chef).deposit(poolId, 0);
 
-        if (isNativeRoutes) {
-            swapAllToNative();
-            chargeFeesNative();
-            addLiquidityFrom(native);
-        } else {
-            chargeFees();
-            addLiquidityFrom(output);
+        uint256 outputBal = IERC20(output).balanceOf(address(this));
+        if (outputBal > 0) {
+            if (isNativeRoutes) {
+                swapAllToNative();
+                chargeFeesNative();
+                addLiquidityFrom(native);
+            } else {
+                chargeFees();
+                addLiquidityFrom(output);
+            }
+
+            deposit();
+
+            lastHarvest = block.timestamp;
+            emit StratHarvest(msg.sender);
         }
-
-        deposit();
-
-        emit StratHarvest(msg.sender);
     }
 
     // performance fees
