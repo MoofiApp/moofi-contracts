@@ -12,7 +12,7 @@ const baseTokenAddresses = [MOON, WMOVR, USDC].map((t) => t.address);
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 25
+const poolId = 34;
 
 async function main() {
   const deployer = await ethers.getSigner();
@@ -84,14 +84,17 @@ async function main() {
   const vault = await Vault.deploy(...Object.values(vaultParams));
   await vault.deployed();
 
+  console.log("Vault deployed to:", vault.address);
+
   const strategyParams = {
     want: lpPair.address,
     poolId: poolId,
     vault: vault.address,
-    unirouter: moonfarm.router, // Pancakeswap Router V2
+    unirouter: moonfarm.router,
     keeper: mofi.keeper,
     beefyFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [MOON.address, WMOVR.address],
+    // Check this before deploy, on some routes it is better to write by yourself
     outputToLp0Route: resolveSwapRoute(
       MOON.address,
       baseTokenAddresses,
@@ -114,7 +117,6 @@ async function main() {
   const strategy = await Strategy.deploy(...Object.values(strategyParams));
   await strategy.deployed();
 
-  console.log("Vault deployed to:", vault.address);
   console.log("Strategy deployed to:", strategy.address);
   console.log("Mofi App object:", {
     id: `moonfarm-${mooPairName.toLowerCase()}`,
