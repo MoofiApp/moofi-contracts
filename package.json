@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "compile": "npx hardhat compile",
     "process": "truffle console --network moonriver --verbose-rpc",
     "migrate": "truffle migration --network moonriver",
-    "flatten": "./node_modules/truffle-flattener/index.js"
+    "flatten": "npx hardhat flatten",
+    "deploy:moonfarmVault": "hardhat run --network moonriver ./scripts/deployMoonfarmVault.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.3.2",
-    "@truffle/hdwallet-provider": "^1.5.0"
+    "@truffle/hdwallet-provider": "^1.5.0",
+    "moofi-addressbook": "^0.3.23"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.7",
+    "hardhat": "^2.6.5",
     "truffle-flattener": "https://github.com/jplew/truffle-flattener"
   }
 }
