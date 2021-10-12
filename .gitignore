@@ -23,3 +23,6 @@ yarn-error.log*
 .secret
 /artifacts
 flatten.sol
+
+/cache
+flatten.sol
