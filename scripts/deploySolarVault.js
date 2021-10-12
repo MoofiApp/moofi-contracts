@@ -92,7 +92,7 @@ async function main() {
     vault: vault.address,
     unirouter: solar.router,
     keeper: mofi.keeper,
-    beefyFeeRecipient: mofi.mofiFeeRecipient,
+    mofiFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [SOLAR.address, WMOVR.address],
     // Check this before deploy, on some routes it is better to write by yourself
     outputToLp0Route: resolveSwapRoute(
