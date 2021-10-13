@@ -143,6 +143,7 @@ async function main() {
     addLiquidityUrl: `https://solarbeam.io/exchange/add/${lpPair.token0}/${lpPair.token1}`,
     buyTokenUrl: `https://solarbeam.io/exchange/add/${lpPair.token0}/${lpPair.token1}`,
     harvestFrequency: 86400,
+    platformUrl: "https://solarbeam.io",
   });
 
   const tx = await vault.initializeStrat(strategy.address);

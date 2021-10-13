@@ -140,6 +140,7 @@ async function main() {
     assets: [token0.symbol, token1.symbol],
     addLiquidityUrl: `https://swap.moonswap.in/#/add/${lpPair.token0}/${lpPair.token1}`,
     buyTokenUrl: `https://swap.moonswap.in/swap?inputCurrency=${lpPair.token0}&outputCurrency=${lpPair.token1}`,
+    platformUrl: "https://swap.moonswap.in/",
     harvestFrequency: 86400,
   });
 
