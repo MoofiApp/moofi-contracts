@@ -123,7 +123,7 @@ async function main() {
   console.log("Mofi App object:", {
     id: `solar-${mooPairName.toLowerCase()}`,
     name: `${mooPairName} LP`,
-    token: `${mooPairName} LP`,
+    token: `${mooPairName} SLP`,
     tokenDescription: "Solarbeam",
     tokenAddress: strategyParams.want,
     tokenDecimals: lpPair.decimals,

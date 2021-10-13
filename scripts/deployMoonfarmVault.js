@@ -121,7 +121,7 @@ async function main() {
   console.log("Mofi App object:", {
     id: `moonfarm-${mooPairName.toLowerCase()}`,
     name: `${mooPairName} LP`,
-    token: `${mooPairName} LP`,
+    token: `${mooPairName} MLP`,
     tokenDescription: "Moonfarm",
     tokenAddress: strategyParams.want,
     tokenDecimals: lpPair.decimals,
