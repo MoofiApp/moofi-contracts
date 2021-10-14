@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/contracts/interfaces/common/IMasterChef.sol": {
-      "lastModificationDate": 1633953123715,
-      "contentHash": "44c98f0479e3d12fc176f02e8bd78bfd",
+      "lastModificationDate": 1634026923220,
+      "contentHash": "71226be0bc61f8a3c40aa04cf764e62c",
       "sourceName": "contracts/interfaces/common/IMasterChef.sol",
       "solcConfig": {
         "version": "0.8.7",
@@ -80,7 +80,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1633951546153,
+      "lastModificationDate": 1633957970256,
       "contentHash": "2cd550cedf51b8d294607dad5023d717",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -118,7 +118,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
-      "lastModificationDate": 1633951547156,
+      "lastModificationDate": 1633957972817,
       "contentHash": "d37406082a74a9b6b114de522fcb6349",
       "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
       "solcConfig": {
@@ -155,7 +155,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol": {
-      "lastModificationDate": 1633951546160,
+      "lastModificationDate": 1633957970255,
       "contentHash": "5365090efc586b728719e562ebfed0d6",
       "sourceName": "@openzeppelin/contracts/utils/math/SafeMath.sol",
       "solcConfig": {
@@ -294,7 +294,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1633951546153,
+      "lastModificationDate": 1633957970256,
       "contentHash": "0eac3e1a83ee62326ca007811285b274",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -328,7 +328,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1633951547156,
+      "lastModificationDate": 1633957972814,
       "contentHash": "aa1be06992a99bb7393b26a6af3c4dfb",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
@@ -364,7 +364,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1633951543699,
+      "lastModificationDate": 1633957963102,
       "contentHash": "851485d5b925529b1a2f34a0be077891",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -398,7 +398,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1633951543699,
+      "lastModificationDate": 1633957963102,
       "contentHash": "c5f6c4e4df069c789e7d84b4c3011913",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
@@ -432,7 +432,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1633951543605,
+      "lastModificationDate": 1633957963083,
       "contentHash": "4fe56b59ced59d87df6b796758f62895",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -468,7 +468,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1633951543694,
+      "lastModificationDate": 1633957963094,
       "contentHash": "662437c05ba6f3706097c8d5ca68a52a",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
@@ -581,7 +581,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
-      "lastModificationDate": 1633951543694,
+      "lastModificationDate": 1633957963095,
       "contentHash": "53fbff678f378956efcb207fa748eaa6",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
@@ -691,7 +691,7 @@
       ]
     },
     "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol": {
-      "lastModificationDate": 1633951547154,
+      "lastModificationDate": 1633957972813,
       "contentHash": "1ef9bb98be133f0008af98b4700b9e95",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol",
       "solcConfig": {
@@ -896,6 +896,119 @@
       ],
       "artifacts": [
         "Multicall"
+      ]
+    },
+    "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/contracts/strategies/common/StrategyCommonChefSingle.sol": {
+      "lastModificationDate": 1634216907262,
+      "contentHash": "5ab85936e7f812333313e2207a36354b",
+      "sourceName": "contracts/strategies/common/StrategyCommonChefSingle.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "../../interfaces/common/IUniswapRouterETH.sol",
+        "../../interfaces/common/IMasterChef.sol",
+        "./StratManager.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "StrategyCommonChefSingle"
+      ]
+    },
+    "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/contracts/strategies/StrategyMoonChefSingle.sol": {
+      "lastModificationDate": 1634216992552,
+      "contentHash": "1b3731fabcaf9b22e2016b468b44e3c9",
+      "sourceName": "contracts/strategies/StrategyMoonChefSingle.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./common/StrategyCommonChefSingle.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "StrategyMoonChefSingle"
+      ]
+    },
+    "/Users/paweljaneczek/Workspace/moofi/moofi-contracts/contracts/strategies/StrategySolarChefLP.sol": {
+      "lastModificationDate": 1634026986970,
+      "contentHash": "2e53d6401402683c7b2f7c9657f4e8c7",
+      "sourceName": "contracts/strategies/StrategySolarChefLP.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./common/StrategyCommonChefLP.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "StrategySolarChefLP"
       ]
     }
   }

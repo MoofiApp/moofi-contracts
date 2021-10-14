@@ -7,8 +7,9 @@
     "process": "truffle console --network moonriver --verbose-rpc",
     "migrate": "truffle migration --network moonriver",
     "flatten": "npx hardhat flatten",
-    "deploy:moonfarmVault": "hardhat run --network moonriver ./scripts/deployMoonfarmVault.js",
-    "deploy:solarVault": "hardhat run --network moonriver ./scripts/deploySolarVault.js"
+    "deploy:moonfarmVaultLP": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultLP.js",
+    "deploy:moonfarmVaultSingle": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultSingle.js",
+    "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.3.2",
