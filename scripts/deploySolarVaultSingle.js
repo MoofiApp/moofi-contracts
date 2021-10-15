@@ -2,7 +2,6 @@ const hardhat = require("hardhat");
 
 const ERC20ABI = require("../abis/ERC20.json");
 const masterchefABI = require("../abis/IMasterChef.json");
-const LPPairABI = require("../abis/IUniswapV2Pair.json");
 
 const { addressBook } = require("moofi-addressbook");
 const { mofi, solar } = addressBook.moonriver.platforms;
@@ -12,7 +11,7 @@ const baseTokenAddresses = [SOLAR, WMOVR, USDC].map((t) => t.address);
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 6;
+const poolId = 2;
 
 async function main() {
   const deployer = await ethers.getSigner();
@@ -23,45 +22,28 @@ async function main() {
     deployer,
   );
   const poolInfo = await masterchefContract.poolInfo(poolId);
-  const lpAddress = ethers.utils.getAddress(poolInfo.lpToken);
+  const token = ethers.utils.getAddress(poolInfo.lpToken);
+  const depositFee = poolInfo.depositFeeBP;
 
-  const lpContract = new ethers.Contract(lpAddress, LPPairABI, deployer);
-  const lpPair = {
-    address: lpAddress,
-    token0: await lpContract.token0(),
-    token1: await lpContract.token1(),
-    decimals: await lpContract.decimals(),
-  };
+  const tokenContract = new ethers.Contract(token, ERC20ABI, deployer);
+  const tokenDecimals = await tokenContract.decimals();
+  const tokenSymbol = await tokenContract.symbol();
 
-  const token0Contract = new ethers.Contract(lpPair.token0, ERC20ABI, deployer);
-  const token0 = {
-    symbol: await token0Contract.symbol(),
-  };
-
-  const token1Contract = new ethers.Contract(lpPair.token1, ERC20ABI, deployer);
-  const token1 = {
-    symbol: await token1Contract.symbol(),
-  };
-
-  const resolveSwapRoute = (input, proxies, preferredProxy, output) => {
+  const resolveSwapRoute = (input, proxies, output) => {
     if (input === output) return [input];
     if (proxies.includes(output)) return [input, output];
-    if (proxies.includes(preferredProxy))
-      return [input, preferredProxy, output];
     return [input, proxies.filter(input)[0], output];
   };
 
-  const mooPairName = `${token0.symbol}-${token1.symbol}`;
-
   const vaultParams = {
-    name: `Mii Solar ${mooPairName}`,
-    symbol: `miiSolar${mooPairName}`,
+    name: `Mii Solar ${tokenSymbol}`,
+    symbol: `miiSolar${tokenSymbol}`,
     delay: 21600,
   };
 
   const contractNames = {
     vault: "MofiVault",
-    strategy: "StrategySolarChefLP",
+    strategy: "StrategySolarChefSingle",
   };
 
   console.log(vaultParams, contractNames);
@@ -79,7 +61,7 @@ async function main() {
   const Vault = await ethers.getContractFactory(contractNames.vault);
   const Strategy = await ethers.getContractFactory(contractNames.strategy);
 
-  console.log("Deploying Vault:", vaultParams.name, vaultParams);
+  console.log("Deploying:", vaultParams.name);
 
   const vault = await Vault.deploy(...Object.values(vaultParams));
   await vault.deployed();
@@ -87,26 +69,14 @@ async function main() {
   console.log("Vault deployed to:", vault.address);
 
   const strategyParams = {
-    want: lpPair.address,
+    want: token,
     poolId: poolId,
     vault: vault.address,
     unirouter: solar.router,
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [SOLAR.address, WMOVR.address],
-    // Check this before deploy, on some routes it is better to write by yourself
-    outputToLp0Route: resolveSwapRoute(
-      SOLAR.address,
-      baseTokenAddresses,
-      lpPair.token1,
-      lpPair.token0,
-    ),
-    outputToLp1Route: resolveSwapRoute(
-      SOLAR.address,
-      baseTokenAddresses,
-      lpPair.token0,
-      lpPair.token1,
-    ),
+    outputToWantRoute: resolveSwapRoute(SOLAR.address, baseTokenAddresses, token)
   };
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
@@ -114,35 +84,34 @@ async function main() {
     return;
   }
 
-  console.log("Deploying Strategy", strategyParams);
-
   const strategy = await Strategy.deploy(...Object.values(strategyParams));
   await strategy.deployed();
 
   console.log("Strategy deployed to:", strategy.address);
   console.log("Mofi App object:", {
-    id: `solar-${mooPairName.toLowerCase()}`,
-    name: `${mooPairName} LP`,
-    token: `${mooPairName} SLP`,
+    id: `solar-${tokenSymbol.toLowerCase()}`,
+    name: tokenSymbol,
+    token: `SOLAR ${tokenSymbol}`,
     tokenDescription: "Solarbeam",
     tokenAddress: strategyParams.want,
-    tokenDecimals: lpPair.decimals,
+    tokenDecimals: tokenDecimals,
     tokenDescriptionUrl: "#",
     earnedToken: vaultParams.symbol,
     earnedTokenAddress: vault.address,
     earnContractAddress: vault.address,
     pricePerFullShare: 1,
     tvl: 0,
-    oracle: "lps",
-    oracleId: `solar-${mooPairName.toLowerCase()}`,
+    oracle: "tokens",
+    oracleId: tokenSymbol,
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
     platform: "Solarbeam",
-    assets: [token0.symbol, token1.symbol],
-    addLiquidityUrl: `https://solarbeam.io/exchange/add/${lpPair.token0}/${lpPair.token1}`,
-    harvestFrequency: 86400,
+    assets: [tokenSymbol],
+    buyTokenUrl: `https://app.solarbeam.io/exchange/swap?outputCurrency=${token}`,
     platformUrl: "https://solarbeam.io",
+    harvestFrequency: 86400,
+    depositFee: depositFee / 100
   });
 
   const tx = await vault.initializeStrat(strategy.address);

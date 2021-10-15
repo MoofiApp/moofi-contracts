@@ -11,7 +11,7 @@ const baseTokenAddresses = [MOON, WMOVR, USDC].map((t) => t.address);
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 2;
+const poolId = 4;
 
 async function main() {
   const deployer = await ethers.getSigner();
@@ -75,11 +75,7 @@ async function main() {
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [MOON.address, WMOVR.address],
-    outputToWantRoute: resolveSwapRoute(
-      MOON.address,
-      baseTokenAddresses,
-      token,
-    )
+    outputToWantRoute: resolveSwapRoute(MOON.address, baseTokenAddresses, token)
   };
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
@@ -94,7 +90,7 @@ async function main() {
   console.log("Mofi App object:", {
     id: `moonfarm-${tokenSymbol.toLowerCase()}`,
     name: tokenSymbol,
-    token: `moonfarm${tokenSymbol}`,
+    token: `MF ${tokenSymbol}`,
     tokenDescription: "Moonfarm",
     tokenAddress: strategyParams.want,
     tokenDecimals: tokenDecimals,

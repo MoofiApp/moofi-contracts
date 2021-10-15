@@ -9,7 +9,8 @@
     "flatten": "npx hardhat flatten",
     "deploy:moonfarmVaultLP": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultLP.js",
     "deploy:moonfarmVaultSingle": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultSingle.js",
-    "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js"
+    "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js",
+    "deploy:solarVaultSingle": "hardhat run --network moonriver ./scripts/deploySolarVaultSingle.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.3.2",
