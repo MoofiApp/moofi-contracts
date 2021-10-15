@@ -1,49 +1,48 @@
 const hardhat = require("hardhat");
 
 const ERC20ABI = require("../abis/ERC20.json");
-const masterchefABI = require("../abis/IMasterChefWithDeposit.json");
+const INTokenABI = require("../abis/INToken.json");
+const masterchefABI = require("../abis/IMasterChef.json");
 
 const { addressBook } = require("moofi-addressbook");
-const { mofi, solar } = addressBook.moonriver.platforms;
-const { SOLAR, WMOVR, USDC } = addressBook.moonriver.tokens;
+const { mofi, solar, neku } = addressBook.moonriver.platforms;
+const { SOLAR, WMOVR, USDC, NEKU } = addressBook.moonriver.tokens;
 const baseTokenAddresses = [SOLAR, WMOVR, USDC].map((t) => t.address);
 
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 2;
+const poolId = 5;
+
+// 5 - dai
 
 async function main() {
   const deployer = await ethers.getSigner();
 
   const masterchefContract = new ethers.Contract(
-    solar.masterchef,
+    neku.masterchef,
     masterchefABI,
     deployer,
   );
   const poolInfo = await masterchefContract.poolInfo(poolId);
-  const token = ethers.utils.getAddress(poolInfo.lpToken);
-  const depositFee = poolInfo.depositFeeBP;
+  const nToken = ethers.utils.getAddress(poolInfo.lpToken);
+
+  const nTokenContract = new ethers.Contract(nToken, INTokenABI, deployer);
+  const token = await nTokenContract.underlying();
 
   const tokenContract = new ethers.Contract(token, ERC20ABI, deployer);
   const tokenDecimals = await tokenContract.decimals();
   const tokenSymbol = await tokenContract.symbol();
 
-  const resolveSwapRoute = (input, proxies, output) => {
-    if (input === output) return [input];
-    if (proxies.includes(output)) return [input, output];
-    return [input, proxies.filter(input)[0], output];
-  };
-
   const vaultParams = {
-    name: `Mii Solar ${tokenSymbol}`,
-    symbol: `miiSolar${tokenSymbol}`,
+    name: `Mii Neku ${tokenSymbol}`,
+    symbol: `miiNeku${tokenSymbol}`,
     delay: 21600,
   };
 
   const contractNames = {
     vault: "MofiVault",
-    strategy: "StrategySolarChefSingle",
+    strategy: "StrategyNekuSingle",
   };
 
   console.log(vaultParams, contractNames);
@@ -70,13 +69,14 @@ async function main() {
 
   const strategyParams = {
     want: token,
+    nToken: nToken,
     poolId: poolId,
     vault: vault.address,
     unirouter: solar.router,
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
-    outputToNativeRoute: [SOLAR.address, WMOVR.address],
-    outputToWantRoute: resolveSwapRoute(SOLAR.address, baseTokenAddresses, token)
+    outputToNativeRoute: [NEKU.address, USDC.address, WMOVR.address],
+    outputToWantRoute: [NEKU.address, USDC.address, token]
   };
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
@@ -84,16 +84,17 @@ async function main() {
     return;
   }
 
+  // const strategy = await Strategy.deploy(...Object.values(strategyParams), { gasLimit: 1000000  });
   const strategy = await Strategy.deploy(...Object.values(strategyParams));
   await strategy.deployed();
 
   console.log("Strategy deployed to:", strategy.address);
   console.log("Mofi App object:", {
-    id: `solar-${tokenSymbol.toLowerCase()}`,
+    id: `neku-${tokenSymbol.toLowerCase()}`,
     name: tokenSymbol,
-    token: `SOLAR ${tokenSymbol}`,
-    tokenDescription: "Solarbeam",
-    tokenAddress: strategyParams.want,
+    token: `NEKU ${tokenSymbol}`,
+    tokenDescription: "Neku",
+    tokenAddress: token,
     tokenDecimals: tokenDecimals,
     tokenDescriptionUrl: "#",
     earnedToken: vaultParams.symbol,
@@ -106,12 +107,11 @@ async function main() {
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Solarbeam",
+    platform: "Neku",
     assets: [tokenSymbol],
     buyTokenUrl: `https://app.solarbeam.io/exchange/swap?outputCurrency=${token}`,
-    platformUrl: "https://solarbeam.io",
+    platformUrl: "https://www.neku.io/",
     harvestFrequency: 86400,
-    depositFee: depositFee / 100
   });
 
   const tx = await vault.initializeStrat(strategy.address);

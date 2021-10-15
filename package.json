@@ -11,12 +11,14 @@
     "deploy:moonfarmVaultLP": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultLP.js",
     "deploy:moonfarmVaultSingle": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultSingle.js",
     "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js",
-    "deploy:solarVaultSingle": "hardhat run --network moonriver ./scripts/deploySolarVaultSingle.js"
+    "deploy:solarVaultSingle": "hardhat run --network moonriver ./scripts/deploySolarVaultSingle.js",
+    "deploy:nekuSupplyVault": "hardhat run --network moonriver ./scripts/deployNekuSupplyVault.js",
+    "deploy:updateStrategy": "hardhat run --network moonriver ./scripts/deployStrategy.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.3.2",
     "@truffle/hdwallet-provider": "^1.5.0",
-    "moofi-addressbook": "^0.3.26"
+    "moofi-addressbook": "^0.3.29"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",

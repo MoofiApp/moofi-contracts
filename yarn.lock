@@ -5655,10 +5655,10 @@ mock-fs@^4.1.0:
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.14.0.tgz#ce5124d2c601421255985e6e94da80a7357b1b18"
   integrity sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==
 
-moofi-addressbook@^0.3.26:
-  version "0.3.26"
-  resolved "https://registry.yarnpkg.com/moofi-addressbook/-/moofi-addressbook-0.3.26.tgz#ae4b52c22cab535e2bb84d9d2a31156dc050b3d8"
-  integrity sha512-jXaOee7oo/8QkR2lgYfHFLeCW2bRIVtZgoHTanwRXdVo1CoHIXcHYnRz5l9FuYjAShMqG1Coy2rh8yaAfwNCPA==
+moofi-addressbook@^0.3.29:
+  version "0.3.29"
+  resolved "https://registry.yarnpkg.com/moofi-addressbook/-/moofi-addressbook-0.3.29.tgz#fadb78fc2a96b6d23a8921ee50c472bfb7e79ea7"
+  integrity sha512-ginzeZp0I6LSm8reRmepm6LA+xC1Xd52ZXj9XXGj/2UU3Smttg3+KiUvh4hGBwutsi4pPurgfJC8xfwJyiseNA==
 
 ms@2.0.0:
   version "2.0.0"

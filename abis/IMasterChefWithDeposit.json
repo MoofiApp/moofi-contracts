@@ -56,6 +56,16 @@
             "internalType": "uint256",
             "name": "lastRewardBlock",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accmoonfarmPerShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16",
+            "name": "depositFeeBP",
+            "type": "uint16"
           }
         ],
         "internalType": "struct IMasterChef.PoolInfo",
