@@ -7,6 +7,7 @@
     "process": "truffle console --network moonriver --verbose-rpc",
     "migrate": "truffle migration --network moonriver",
     "flatten": "npx hardhat flatten",
+    "deploy:multicall": "hardhat run --network moonriver ./scripts/deployMulticall.js",
     "deploy:moonfarmVaultLP": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultLP.js",
     "deploy:moonfarmVaultSingle": "hardhat run --network moonriver ./scripts/deployMoonfarmVaultSingle.js",
     "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js",
