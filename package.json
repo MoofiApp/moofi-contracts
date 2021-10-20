@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "compile": "npx hardhat compile",
-    "process": "truffle console --network moonriver --verbose-rpc",
+    "process": "npx hardhat console --network moonriver",
     "migrate": "truffle migration --network moonriver",
     "flatten": "npx hardhat flatten",
     "deploy:multicall": "hardhat run --network moonriver ./scripts/deployMulticall.js",

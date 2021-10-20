@@ -246,8 +246,7 @@ contract StrategyNekuSingle is StratManager {
         returns (uint256)
     {
         uint256 exchangeRate = INToken(ntoken).exchangeRateStored();
-        uint8 power = ERC20(want).decimals();
-        return _underlyingAmount.mul(10**power).div(exchangeRate);
+        return _underlyingAmount.mul(1e18).div(exchangeRate);
     }
 
     function calculateUnderlyingTokenAmount(uint256 _nTokenAmount)
@@ -256,8 +255,7 @@ contract StrategyNekuSingle is StratManager {
         returns (uint256)
     {
         uint256 exchangeRate = INToken(ntoken).exchangeRateStored();
-        uint8 power = ERC20(want).decimals();
-        return _nTokenAmount.mul(exchangeRate).div(10**power);
+        return _nTokenAmount.mul(exchangeRate).div(1e18);
     }
 
     function _giveAllowances() internal {

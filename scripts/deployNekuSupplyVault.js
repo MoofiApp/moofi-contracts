@@ -12,9 +12,7 @@ const baseTokenAddresses = [SOLAR, WMOVR, USDC].map((t) => t.address);
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 5;
-
-// 5 - dai
+const poolId = 1;
 
 async function main() {
   const deployer = await ethers.getSigner();
@@ -76,7 +74,7 @@ async function main() {
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [NEKU.address, USDC.address, WMOVR.address],
-    outputToWantRoute: [NEKU.address, USDC.address, token]
+    outputToWantRoute: [NEKU.address]
   };
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
@@ -90,7 +88,7 @@ async function main() {
 
   console.log("Strategy deployed to:", strategy.address);
   console.log("Mofi App object:", {
-    id: `neku-${tokenSymbol.toLowerCase()}`,
+    id: `neku-n${tokenSymbol.toLowerCase()}`,
     name: tokenSymbol,
     token: `NEKU ${tokenSymbol}`,
     tokenDescription: "Neku",
@@ -112,6 +110,8 @@ async function main() {
     buyTokenUrl: `https://app.solarbeam.io/exchange/swap?outputCurrency=${token}`,
     platformUrl: "https://www.neku.io/",
     harvestFrequency: 86400,
+    additionalInfoText: "Pool-Neku-AdditionalInfoText",
+    tags: ["Lending"]
   });
 
   const tx = await vault.initializeStrat(strategy.address);
