@@ -5,20 +5,20 @@ const masterchefABI = require("../abis/IMasterChef.json");
 const LPPairABI = require("../abis/IUniswapV2Pair.json");
 
 const { addressBook } = require("moofi-addressbook");
-const { mofi, solar } = addressBook.moonriver.platforms;
-const { SOLAR, WMOVR, USDC } = addressBook.moonriver.tokens;
-const baseTokenAddresses = [SOLAR, WMOVR, USDC].map((t) => t.address);
+const { mofi, huckleberry } = addressBook.moonriver.platforms;
+const { FINN, WMOVR, "USDC.m": USDC } = addressBook.moonriver.tokens;
+const baseTokenAddresses = [FINN, WMOVR, USDC].map((t) => t.address);
 
 const ethers = hardhat.ethers;
 
 // Change on deploy
-const poolId = 6;
+const poolId = 5;
 
 async function main() {
   const deployer = await ethers.getSigner();
 
   const masterchefContract = new ethers.Contract(
-    solar.masterchef,
+    huckleberry.masterchef,
     masterchefABI,
     deployer,
   );
@@ -54,14 +54,14 @@ async function main() {
   const mooPairName = `${token0.symbol}-${token1.symbol}`;
 
   const vaultParams = {
-    name: `Mii Solar ${mooPairName}`,
-    symbol: `miiSolar${mooPairName}`,
+    name: `Mii Huckle ${mooPairName}`,
+    symbol: `miiHuckle${mooPairName}`,
     delay: 21600,
   };
 
   const contractNames = {
     vault: "MofiVault",
-    strategy: "StrategySolarChefLP",
+    strategy: "StrategyHuckleChefLP",
   };
 
   console.log(vaultParams, contractNames);
@@ -79,7 +79,7 @@ async function main() {
   const Vault = await ethers.getContractFactory(contractNames.vault);
   const Strategy = await ethers.getContractFactory(contractNames.strategy);
 
-  console.log("Deploying Vault:", vaultParams.name, vaultParams);
+  console.log("Deploying:", vaultParams.name);
 
   const vault = await Vault.deploy(...Object.values(vaultParams));
   await vault.deployed();
@@ -90,41 +90,40 @@ async function main() {
     want: lpPair.address,
     poolId: poolId,
     vault: vault.address,
-    unirouter: solar.router,
+    unirouter: huckleberry.router,
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
-    outputToNativeRoute: [SOLAR.address, WMOVR.address],
+    outputToNativeRoute: [FINN.address, WMOVR.address],
     // Check this before deploy, on some routes it is better to write by yourself
     outputToLp0Route: resolveSwapRoute(
-      SOLAR.address,
+      FINN.address,
       baseTokenAddresses,
       lpPair.token1,
       lpPair.token0,
     ),
     outputToLp1Route: resolveSwapRoute(
-      SOLAR.address,
+      FINN.address,
       baseTokenAddresses,
       lpPair.token0,
       lpPair.token1,
     ),
   };
+  console.log("Strategy params", strategyParams);
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
     console.error("one of config values undefined");
     return;
   }
 
-  console.log("Deploying Strategy", strategyParams);
-
   const strategy = await Strategy.deploy(...Object.values(strategyParams));
   await strategy.deployed();
 
   console.log("Strategy deployed to:", strategy.address);
   console.log("Mofi App object:", {
-    id: `solar-${mooPairName.toLowerCase()}`,
+    id: `huckle-${mooPairName.toLowerCase()}`,
     name: `${mooPairName} LP`,
-    token: `${mooPairName} SLP`,
-    tokenDescription: "Solarbeam",
+    token: `${mooPairName} MLP`,
+    tokenDescription: "Huckleberry",
     tokenAddress: strategyParams.want,
     tokenDecimals: lpPair.decimals,
     tokenDescriptionUrl: "#",
@@ -134,15 +133,16 @@ async function main() {
     pricePerFullShare: 1,
     tvl: 0,
     oracle: "lps",
-    oracleId: `solar-${mooPairName.toLowerCase()}`,
+    oracleId: `huckle-${mooPairName.toLowerCase()}`,
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Solarbeam",
+    platform: "Huckleberry",
     assets: [token0.symbol, token1.symbol],
-    addLiquidityUrl: `https://app.solarbeam.io/exchange/add/${lpPair.token0}/${lpPair.token1}`,
+    addLiquidityUrl: `https://www.huckleberry.finance/#/add/${lpPair.token0}/${lpPair.token1}/`,
+    buyTokenUrl: `https://www.huckleberry.finance/swap?inputCurrency=${lpPair.token0}&outputCurrency=${lpPair.token1}`,
+    platformUrl: "https://www.huckleberry.finance/",
     harvestFrequency: 86400,
-    platformUrl: "https://solarbeam.io",
   });
 
   const tx = await vault.initializeStrat(strategy.address);

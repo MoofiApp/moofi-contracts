@@ -12,8 +12,8 @@ const baseTokenAddresses = [SOLAR, WMOVR, USDC].map((t) => t.address);
 
 const ethers = hardhat.ethers;
 
-const poolId = 1;
-const vaultAddress = "0x4AEc841B98F605751F00c3a27A5799496495a76E";
+const poolId = 2;
+const vaultAddress = "0x885F02c8a3DB18ffa11Ee8c65af4Bedb8e331577";
 const strategyContractName = "StrategyNekuSingle";
 
 async function main() {
@@ -48,7 +48,7 @@ async function main() {
     keeper: mofi.keeper,
     mofiFeeRecipient: mofi.mofiFeeRecipient,
     outputToNativeRoute: [NEKU.address, USDC.address, WMOVR.address],
-    outputToWantRoute: [NEKU.address],
+    outputToWantRoute: [NEKU.address, USDC.address],
   };
 
   if (Object.values(strategyParams).some((v) => v === undefined)) {
@@ -63,9 +63,9 @@ async function main() {
   await strategy.deployed();
 
   console.log("Strategy deployed to:", strategy.address);
-  console.log("Upgrading strat...");
+  console.log("Proposing strat...");
 
-  // await vault.proposeStrat(strategy.address);
+  await vault.proposeStrat(strategy.address);
   // await vault.upgradeStrat();
 
   console.log("Done!");

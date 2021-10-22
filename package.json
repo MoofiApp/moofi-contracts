@@ -13,7 +13,8 @@
     "deploy:solarVaultLP": "hardhat run --network moonriver ./scripts/deploySolarVaultLP.js",
     "deploy:solarVaultSingle": "hardhat run --network moonriver ./scripts/deploySolarVaultSingle.js",
     "deploy:nekuSupplyVault": "hardhat run --network moonriver ./scripts/deployNekuSupplyVault.js",
-    "deploy:updateStrategy": "hardhat run --network moonriver ./scripts/deployStrategy.js"
+    "deploy:updateStrategyNeku": "hardhat run --network moonriver ./scripts/deployStrategyNeku.js",
+    "deploy:huckleVaultLP": "hardhat run --network moonriver ./scripts/deployHuckleVaultLP.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.3.2",

@@ -11,7 +11,7 @@ import "../../interfaces/common/IUniswapV2Pair.sol";
 import "../../interfaces/common/IMasterChef.sol";
 import "./StratManager.sol";
 
-contract StrategyCommonChefLP is StratManager {
+contract StrategyCommonChefFeeLP is StratManager {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
@@ -134,12 +134,12 @@ contract StrategyCommonChefLP is StratManager {
     // performance fees
     function swapAllToNative() internal {
         uint256 toNative = IERC20(output).balanceOf(address(this));
-        IUniswapRouterETH(unirouter).swapExactTokensForTokens(toNative, 0, toNativeRoute, address(this), block.timestamp);
+        IUniswapRouterETH(unirouter).swapExactTokensForTokensSupportingFeeOnTransferTokens(toNative, 0, toNativeRoute, address(this), block.timestamp);
     }
 
     function chargeFees() internal {
         uint256 toNative = IERC20(output).balanceOf(address(this)).mul(HARVEST_FEE).div(1000);
-        IUniswapRouterETH(unirouter).swapExactTokensForTokens(toNative, 0, toNativeRoute, address(this), block.timestamp);
+        IUniswapRouterETH(unirouter).swapExactTokensForTokensSupportingFeeOnTransferTokens(toNative, 0, toNativeRoute, address(this), block.timestamp);
 
         uint256 nativeBal = IERC20(native).balanceOf(address(this));
         transferFees(nativeBal);
@@ -159,11 +159,11 @@ contract StrategyCommonChefLP is StratManager {
         uint256 yieldHalf = IERC20(yield).balanceOf(address(this)).div(2);
 
         if (lpToken0 != yield) {
-            IUniswapRouterETH(unirouter).swapExactTokensForTokens(yieldHalf, 0, toLp0Route, address(this), block.timestamp);
+            IUniswapRouterETH(unirouter).swapExactTokensForTokensSupportingFeeOnTransferTokens(yieldHalf, 0, toLp0Route, address(this), block.timestamp);
         }
 
         if (lpToken1 != yield) {
-            IUniswapRouterETH(unirouter).swapExactTokensForTokens(yieldHalf, 0, toLp1Route, address(this), block.timestamp);
+            IUniswapRouterETH(unirouter).swapExactTokensForTokensSupportingFeeOnTransferTokens(yieldHalf, 0, toLp1Route, address(this), block.timestamp);
         }
 
         uint256 lp0Bal = IERC20(lpToken0).balanceOf(address(this));
